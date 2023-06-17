@@ -1,11 +1,11 @@
 {
-  "name": "create-nodejs-express-app",
-  "version": "1.7.0",
-  "description": "Create a Node.js app for building production-ready RESTful APIs using Express, by running one command",
+  "name": "MySocialApp",
+  "version": "0.1.0",
+  "description": "A social media application that built with node.js",
   "bin": "bin/createNodejsApp.js",
   "main": "src/index.js",
-  "repository": "https://github.com/hagopj13/node-express-boilerplate.git",
-  "author": "Hagop Jamkojian <hagopj13@gmail.com>",
+  "repository": "https://github.com/hrshit/MySocialApp-Backend.git",
+  "author": "Harshit kumar",
   "license": "MIT",
   "engines": {
     "node": ">=12.0.0"
