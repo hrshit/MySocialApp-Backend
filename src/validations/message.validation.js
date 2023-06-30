@@ -3,7 +3,7 @@ const { objectId, msgLength } = require('./custom.validation');
 
 const createMessage = {
   body: Joi.object().keys({
-    message: Joi.string().required().custom(msgLength),
+    content: Joi.string().required().custom(msgLength),
   }),
 };
 

@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const { messageService } = require('../services');
 
 const createMessage = catchAsync(async (req, res) => {
+  req.body.postedBy = req.user;
   const message = await messageService.createMessage(req.body);
   res.status(httpStatus.CREATED).send(message);
 });

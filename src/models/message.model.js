@@ -16,7 +16,6 @@ const messageSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
     },
   ],
   postedAt: {
