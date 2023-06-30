@@ -12,15 +12,13 @@ const messageSchema = mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  likes: {
-    likedby: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
-    ],
-  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  ],
   postedAt: {
     type: Date,
     default: Date.now,
