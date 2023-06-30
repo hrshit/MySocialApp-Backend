@@ -5,6 +5,17 @@ const objectId = (value, helpers) => {
   return value;
 };
 
+const msgLength = (value, helpers) => {
+  const minLength = 1; // Minimum message length
+  const maxLength = 280; // Maximum message length
+
+  if (value.length < minLength || value.length > maxLength) {
+    return helpers.message(`Message must be between ${minLength} and ${maxLength} characters long`);
+  }
+
+  return value;
+};
+
 const password = (value, helpers) => {
   if (value.length < 8) {
     return helpers.message('password must be at least 8 characters');
@@ -18,4 +29,5 @@ const password = (value, helpers) => {
 module.exports = {
   objectId,
   password,
+  msgLength,
 };
