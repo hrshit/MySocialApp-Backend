@@ -27,10 +27,26 @@ const messageSchema = mongoose.Schema({
 messageSchema.plugin(toJSON);
 messageSchema.plugin(paginate);
 
-// messageSchema.methods.isAlready(userid);
-// {
-//   return this.likes.likedby.includes(userid);
-// }
+messageSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'postedBy',
+    select: ['name', 'email'],
+  });
+  this.populate([
+    {
+      path: 'likes',
+      select: 'name',
+    },
+  ]);
+  next();
+});
+
+messageSchema.methods.isUserAlreadyLiked = async function (user) {
+  const isLiked = await this.likes.some(function (like) {
+    return like.equals(user._id);
+  });
+  return isLiked;
+};
 
 const Message = mongoose.model('Message', messageSchema);
 module.exports = Message;

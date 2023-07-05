@@ -11,7 +11,7 @@ const createMessage = catchAsync(async (req, res) => {
 });
 
 const getMessages = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role']);
+  const filter = pick(req.query, ['content']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await messageService.getMessages(filter, options);
   res.send(result);
@@ -25,6 +25,16 @@ const getMessage = catchAsync(async (req, res) => {
   res.send(message);
 });
 
+const updateMessage = catchAsync(async (req, res) => {
+  const message = await messageService.updateMessageById(req.params.messageId, req.body);
+  res.send(message);
+});
+
+const likeMessage = catchAsync(async (req, res) => {
+  const message = await messageService.likeMessageById(req.params.messageId, req.user);
+  res.send(message);
+});
+
 const deleteMessage = catchAsync(async (req, res) => {
   await messageService.deleteMessageById(req.params.messageId);
   res.status(httpStatus.NO_CONTENT).send();
@@ -34,5 +44,7 @@ module.exports = {
   createMessage,
   getMessages,
   getMessage,
+  updateMessage,
+  likeMessage,
   deleteMessage,
 };

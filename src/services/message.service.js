@@ -15,14 +15,32 @@ const getMessageById = async (messageId) => {
   return Message.findById(messageId);
 };
 
-// const updateMessageById = async (messageId, updateReq) => {
-//   const message = await getMessageById(messageId);
-//   if (!message) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'message not found');
-//   }
-//   if (updateReq == req.body) {
-//   }
-// };
+const updateMessageById = async (messageId, updateReq) => {
+  const message = await getMessageById(messageId);
+  if (!message) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'message not found');
+  }
+  Object.assign(message, updateReq);
+  await message.save();
+  return message;
+};
+
+const likeMessageById = async (messageId, user) => {
+  const message = await getMessageById(messageId);
+  if (!message) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'message not found');
+  }
+
+  const isLiked = await message.isUserAlreadyLiked(user);
+  if (!isLiked) {
+    await message.likes.push(user);
+  } else {
+    await message.likes.pull(user);
+  }
+
+  message.save();
+  return message;
+};
 
 const deleteMessageById = async (messageId) => {
   const message = await getMessageById(messageId);
@@ -37,6 +55,7 @@ module.exports = {
   createMessage,
   getMessages,
   getMessageById,
-  // updateMessageById,
+  updateMessageById,
+  likeMessageById,
   deleteMessageById,
 };

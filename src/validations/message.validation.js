@@ -9,7 +9,7 @@ const createMessage = {
 
 const getMessages = {
   query: Joi.object().keys({
-    searchKeyword: Joi.string(),
+    content: Joi.string(),
     role: Joi.string().optional(),
     sortBy: Joi.string().optional(),
     limit: Joi.number().integer().optional(),
@@ -28,7 +28,7 @@ const updateMessage = {
     messageId: Joi.string().custom(objectId),
   }),
   body: Joi.object().keys({
-    message: Joi.string().required().custom(msgLength),
+    content: Joi.string().required().custom(msgLength),
   }),
 };
 

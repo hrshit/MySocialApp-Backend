@@ -14,9 +14,11 @@ router
 router
   .route('/:messageId')
   .get(auth('manageMessages'), validate(messageValidation.getMessage), messageController.getMessage)
-  // .patch(auth('manageMessages'), validate(messageValidation.updateMessage))
+  .patch(auth('manageMessages'), validate(messageValidation.updateMessage), messageController.updateMessage)
   .delete(auth('manageMessages'), validate(messageValidation.deleteMessage), messageController.deleteMessage);
 
-// router.route('/like/:messageId').patch(auth('manageMessages'), validate(messageValidation.likeMessage));
+router
+  .route('/like/:messageId')
+  .patch(auth('manageMessages'), validate(messageValidation.likeMessage), messageController.likeMessage);
 
 module.exports = router;
