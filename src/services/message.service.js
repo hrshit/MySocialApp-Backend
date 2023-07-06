@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
-const { Message } = require('../models');
+const { Message, Notification } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { notificationTypes } = require('../config/notificationType');
 
 const createMessage = async (messagebody) => {
   return Message.create(messagebody);
@@ -34,6 +35,17 @@ const likeMessageById = async (messageId, user) => {
   const isLiked = await message.isUserAlreadyLiked(user);
   if (!isLiked) {
     await message.likes.push(user);
+    const notificationBody = {
+      receiver: message.postedBy,
+      creator: user,
+      notificationType: notificationTypes.like,
+      referencePost: message,
+    };
+
+    // console.log("check point 1", notificationBody);
+    await Notification.create(notificationBody);
+    // const myNotification = await Notification.create(notificationBody);
+    // console.log("check Point 2", myNotification);
   } else {
     await message.likes.pull(user);
   }
