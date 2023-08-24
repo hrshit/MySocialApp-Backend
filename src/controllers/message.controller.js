@@ -26,7 +26,7 @@ const getMessage = catchAsync(async (req, res) => {
 });
 
 const updateMessage = catchAsync(async (req, res) => {
-  const message = await messageService.updateMessageById(req.params.messageId, req.body);
+  const message = await messageService.updateMessageById(req.params.messageId, req.body, req.user);
   res.send(message);
 });
 

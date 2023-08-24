@@ -16,10 +16,12 @@ const getMessageById = async (messageId) => {
   return Message.findById(messageId);
 };
 
-const updateMessageById = async (messageId, updateReq) => {
+const updateMessageById = async (messageId, updateReq, user) => {
   const message = await getMessageById(messageId);
   if (!message) {
     throw new ApiError(httpStatus.NOT_FOUND, 'message not found');
+  } else if (message.postedBy !== user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'message not posted by you');
   }
   Object.assign(message, updateReq);
   await message.save();
@@ -57,7 +59,7 @@ const likeMessageById = async (messageId, user) => {
 const deleteMessageById = async (messageId) => {
   const message = await getMessageById(messageId);
   if (!message) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Message not found');
   }
   await message.remove();
   return message;
