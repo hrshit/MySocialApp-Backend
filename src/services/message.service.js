@@ -20,7 +20,7 @@ const updateMessageById = async (messageId, updateReq, user) => {
   const message = await getMessageById(messageId);
   if (!message) {
     throw new ApiError(httpStatus.NOT_FOUND, 'message not found');
-  } else if (message.postedBy !== user) {
+  } else if (message.postedBy.id !== user.id) {
     throw new ApiError(httpStatus.NOT_FOUND, 'message not posted by you');
   }
   Object.assign(message, updateReq);

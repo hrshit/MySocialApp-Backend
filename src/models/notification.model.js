@@ -23,10 +23,19 @@ const notificationSchema = mongoose.Schema({
     ref: 'Message',
     required: true,
   },
-  createdAt: {
+  actedAt: {
     type: Date,
     default: Date.now,
+    select: true,
   },
+});
+
+notificationSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'creator',
+    select: ['name'],
+  });
+  next();
 });
 
 notificationSchema.plugin(toJSON);
